@@ -37,9 +37,6 @@
         <tbody>
         <tr th:each="specialist: ${specialists}">
             <td>[[${specialist.id}]]</td>
-            <td>
-                <a th:href="@{'/specialist/' + ${specialist.id}}"> [[${specialist.name}]] </a>
-            </td>
             <td>[[${specialist.name}]]</td>
             <td>[[${specialist.profile}]]</td>
             <td>[[${specialist.qualification}]]</td>
@@ -50,10 +47,13 @@
                 <a th:href="@{'/specialist/update/' + ${specialist.id}}" class="btn btn-primary">Редактировать</a>
                 <a th:href="@{'/specialist/' + ${specialist.id}}" class="btn btn-success">Просмотр</a>
             </td>
-
         </tr>
         </tbody>
     </table>
+
+    <a class="btn btn-success form-control" th:href="@{/specialist/new}">Добавить нового специалиста</a>
+    <h4><a th:href="@{/}">На главную</a> </h4>
+
 </div>
 </body>
 </html>
