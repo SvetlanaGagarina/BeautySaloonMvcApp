@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Beauty Saloon</title>
+    <!-- подключения локального bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<!-- врестка с использованием bootstrap -->
+<div class="container-fluid text-center">
+    <h1>Каталог специалистов.</h1>
+
+    <!-- вывод сообщения success message -->
+    <p class="alert alert-success" th:if="${successMessage != null}">
+        [[${successMessage}]]
+    </p>
+
+    <!-- вывод сообщения danger message -->
+    <p class="alert alert-danger" th:if="${dangerMessage != null}">
+        [[${dangerMessage}]]
+    </p>
+
+    <!-- вывод списка специалистов через цикл (используется таблица)-->
+    <table class="table table-bordered">
+        <!-- шапка таблицы -->
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>ФИО</th>
+            <th>Профиль</th>
+            <th>Квалификация</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <!-- тело таблицы -->
+        <tbody>
+        <tr th:each="specialist: ${specialists}">
+            <td>[[${specialist.id}]]</td>
+            <td>
+                <a th:href="@{'/specialist/' + ${specialist.id}}"> [[${specialist.name}]] </a>
+            </td>
+            <td>[[${specialist.name}]]</td>
+            <td>[[${specialist.profile}]]</td>
+            <td>[[${specialist.qualification}]]</td>
+
+            <!-- ячейка действия -->
+            <td>
+                <a th:href="@{'/specialist/delete/' + ${specialist.id}}" class="btn btn-danger">Удалить</a>
+                <a th:href="@{'/specialist/update/' + ${specialist.id}}" class="btn btn-primary">Редактировать</a>
+                <a th:href="@{'/specialist/' + ${specialist.id}}" class="btn btn-success">Просмотр</a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
