@@ -5,6 +5,7 @@ import org.top.beautysaloonmvcapp.entity.Review;
 
 import java.util.Optional;
 
+// Сервис для работы с отзывами
 @Service
 public interface ReviewService {
     // 1. Получение всех отзывов по специалисту

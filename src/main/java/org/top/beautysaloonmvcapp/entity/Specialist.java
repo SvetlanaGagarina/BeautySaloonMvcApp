@@ -2,6 +2,8 @@ package org.top.beautysaloonmvcapp.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 // Specialist описывает сущность "Специалист" - запись таблицы специалистов салона
 @Entity
 @Table(name = "specialist_t")
@@ -19,6 +21,10 @@ public class Specialist {
 
     @Column(name="qualification_f", nullable = false)
     private String qualification; // Квалификация специалиста
+
+    //Связи
+    @OneToMany(mappedBy = "specialist")
+    private Set<Review> reviewSet;
 
     // конструкторы
     public Specialist() {
@@ -62,7 +68,15 @@ public class Specialist {
         this.qualification = qualification;
     }
 
-    // ToString
+    public Set<Review> getReviewSet() {
+        return reviewSet;
+    }
+
+    public void setReviewSet(Set<Review> reviewSet) {
+        this.reviewSet = reviewSet;
+    }
+
+// ToString
 
     @Override
     public String toString() {

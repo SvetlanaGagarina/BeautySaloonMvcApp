@@ -11,6 +11,15 @@
     <h1>Specialist Details</h1>
     <p>[[${specialist}]]</p>
 
+    <h2>Наши отзывы:</h2>
+    <ol>
+        <li th:each="review: ${specialist.get().reviewSet}">
+            [[${review}]]
+        </li>
+    </ol>
+
+    <a th:href="@{'/review/new/' + ${specialist.get().id}}">Добавить новый отзыв</a>
+
     <a th:href="@{/specialist}">Вернуться к списку специалистов</a>
 </div>
 <!-- вставка фрагмента футера -->

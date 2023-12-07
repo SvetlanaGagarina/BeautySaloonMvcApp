@@ -20,7 +20,7 @@ public class Review {
     private String comment;         // комментарий отзыва
 
     @Column(name="written_in")
-    private Date writtenIn;
+    private Date writtenIn;//дата отзыва, для сортировки отзывов и возможностей редактирования отзыва
 
     // Связь: отзыв ссылается на специалиста, много отзывов к одному специалисту
     @ManyToOne
@@ -83,7 +83,6 @@ public class Review {
                 ", reviewRate=" + reviewRate +
                 ", comment='" + comment + '\'' +
                 ", writtenIn=" + writtenIn +
-                ", specialist=" + specialist +
                 '}';
     }
 }
