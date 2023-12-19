@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="layout/page-layout.html :: page-head"></head>
+<body>
+<!-- вставка фрагмента шапки -->
+<th:block th:replace="layout/page-layout.html :: page-header(page='procedure')"/>
+
+<!-- врестка с использованием bootstrap -->
+<div class="content container-fluid text-center">
+    <h1>Каталог услуг</h1>
+
+    <!-- вывод сообщения success message -->
+    <th:block th:replace="layout/page-layout.html :: page-message"/>
+
+    <!-- вывод списка услуг через цикл (используется таблица)-->
+    <table class="table table-bordered">
+        <!-- шапка таблицы -->
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Наименование услуги</th>
+            <th>Цена(руб.)</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <!-- тело таблицы -->
+        <tbody>
+        <tr th:each="procedure: ${procedures}">
+            <td>[[${procedure.id}]]</td>
+            <td>[[${procedure.name}]]</td>
+            <td>[[${procedure.price}]]</td>
+
+            <!-- ячейка действия -->
+            <td>
+                <a th:href="@{'/procedure/delete/' + ${procedure.id}}" class="btn btn-danger">Удалить</a>
+                <a th:href="@{'/procedure/update/' + ${procedure.id}}" class="btn btn-primary">Редактировать</a>
+                <a th:href="@{'/procedure/' + ${procedure.id}}" class="btn btn-success">Просмотр</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-success form-control" th:href="@{/procedure/new}">Добавить новую услугу</a>
+
+</div>
+<br>
+<!-- вставка фрагмента футера -->
+<th:block th:replace="layout/page-layout.html :: page-footer"/>
+</body>
+</html>

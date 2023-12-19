@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="layout/page-layout.html :: page-head"></head>
+<body>
+<!-- вставка фрагмента шапки -->
+<th:block th:replace="layout/page-layout.html :: page-header(page='procedure')"/>
+
+<!-- верстка с использованием bootstrap -->
+<div class="content container-fluid text-center">
+    <h1>Добавление новой услуги</h1>
+    <div class="container-sm align-content-center text-center">
+        <form method="post" th:action="@{/procedure/new}" th:object="${procedure}" enctype="multipart/form-data">
+
+            <!-- Наименование услуги -->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" for="name">Наименование услуги: </label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="name" required minlength="1" th:field="*{name}"/>
+                </div>
+            </div>
+
+            <!-- Стоимость услуги -->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" for="price">Стоимость 1 процедуры(руб): </label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="number" id="price" required step="any" th:field="*{price}"/>
+                </div>
+            </div>
+
+<!-- изображение-превью процедуры -->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" for="preview">Изображение: </label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="file" name="previewImage" id="preview" />
+                </div>
+            </div>
+
+
+            <!-- кнопка отправки формы -->
+            <div class="mb-3 row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5">
+                    <button class="btn btn-success form-control">Сохранить</button>
+                </div>
+                <div class="col-sm-5">
+                    <a class="btn btn-danger form-control" th:href="@{/procedure}">Отменить</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+<!-- вставка фрагмента футера -->
+<th:block th:replace="layout/page-layout.html :: page-footer"/>
+</body>
+</html>

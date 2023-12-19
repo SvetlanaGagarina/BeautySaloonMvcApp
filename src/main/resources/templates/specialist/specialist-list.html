@@ -1,25 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Beauty Saloon</title>
-    <!-- подключения локального bootstrap -->
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-</head>
+<head th:insert="layout/page-layout.html :: page-head"></head>
 <body>
+<!-- вставка фрагмента шапки -->
+<th:block th:replace="layout/page-layout.html :: page-header(page='specialist')"/>
+
 <!-- врестка с использованием bootstrap -->
-<div class="container-fluid text-center">
+<div class="content container-fluid text-center">
     <h1>Каталог специалистов.</h1>
 
     <!-- вывод сообщения success message -->
-    <p class="alert alert-success" th:if="${successMessage != null}">
-        [[${successMessage}]]
-    </p>
-
-    <!-- вывод сообщения danger message -->
-    <p class="alert alert-danger" th:if="${dangerMessage != null}">
-        [[${dangerMessage}]]
-    </p>
+    <th:block th:replace="layout/page-layout.html :: page-message"/>
 
     <!-- вывод списка специалистов через цикл (используется таблица)-->
     <table class="table table-bordered">
@@ -52,9 +43,9 @@
     </table>
 
     <a class="btn btn-success form-control" th:href="@{/specialist/new}">Добавить нового специалиста</a>
-    <h4><a th:href="@{/}">На главную</a> </h4>
 
 </div>
+<br>
 <!-- вставка фрагмента футера -->
 <th:block th:replace="layout/page-layout.html :: page-footer"/>
 </body>

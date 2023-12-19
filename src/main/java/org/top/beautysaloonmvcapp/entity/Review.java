@@ -1,7 +1,10 @@
 package org.top.beautysaloonmvcapp.entity;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 // Review описывает сущность "Отзыв о специалисте" - запись таблицы отзывов о специалистах
@@ -32,6 +35,7 @@ public class Review {
         id = 0;
         reviewRate = 0.0;
         comment = null;
+        writtenIn = null;
     }
 
     // гетеры и сеттеры
@@ -73,6 +77,14 @@ public class Review {
 
     public void setSpecialist(Specialist specialist) {
         this.specialist = specialist;
+    }
+
+    // Получение строки вывода даты
+    // (либо использовать встроенные аннотации спринга
+    // @DateTimeFormat например, с дополнительными библиотеками)
+    public String getWrittenInString() {
+        DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        return formatter.format(writtenIn);
     }
 
     // toString()

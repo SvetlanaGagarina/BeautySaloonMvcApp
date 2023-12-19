@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Beauty Saloon</title>
-    <!-- подключения локального bootstrap -->
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-</head>
+<head th:insert="layout/page-layout.html :: page-head"></head>
 <body>
-  <div class="container-fluid text-center">
-        <h1>Добро пожаловать в приложение "Каталог специалистов"!</h1>
+<!-- вставка фрагмента шапки -->
+<th:block th:replace="layout/page-layout.html :: page-header(page='index')"/>
 
-        <h4><a th:href="@{/specialist}">Работа со специалистами</a></h4>
+  <div class="content container-fluid text-center">
+        <h1>Добро пожаловать в приложение "Салон красоты"!</h1>
+      <h4>Вы можете подобрать для себя необходимые услуги.</h4>
 
+        <h4><a th:href="@{/procedure}">Переходите в "Каталог услуг"</a></h4>
+      <h4>Наши контакты: тел. 8-800-960-34-23, 8-928-456-30-12</h4>
+
+      <!-- обращение к статичному изображению -->
+       <img th:src="@{/images/images-4.jpg}"/>
+  </div>
       <!-- вставка фрагмента футера -->
       <th:block th:replace="layout/page-layout.html :: page-footer"/>
-  </div>
+
 </body>
 </html>

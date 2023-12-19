@@ -1,27 +1,84 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Beauty Saloon</title>
-    <!-- подключения локального bootstrap -->
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-</head>
+<head th:insert="layout/page-layout.html :: page-head"></head>
 <body>
-<div class="container-fluid text-center">
-    <h1>Specialist Details</h1>
-    <p>[[${specialist}]]</p>
+<!-- вставка фрагмента шапки -->
+<th:block th:replace="layout/page-layout.html :: page-header(page='specialist')"/>
+
+<div class="content container-fluid text-center">
+    <h1>Детальная информация о специалисте</h1>
+    <table class="table table-bordered">
+        <!-- тело таблицы -->
+        <tbody>
+        <tr>
+            <th>ID:</th>
+            <td>[[${specialist.id}]]</td>
+        </tr>
+        <tr>
+            <th>ФИО:</th>
+            <td>[[${specialist.name}]]</td>
+        </tr>
+        <tr>
+            <th>Профиль специалиста:</th>
+            <td>[[${specialist.profile}]]</td>
+        </tr>
+        <tr>
+            <th>Квалификация специалиста:</th>
+            <td>[[${specialist.qualification}]]</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2>Написать отзыв:</h2>
+
+    <form method="post" th:action="@{/review/new}" th:object="${review}">
+
+        <!-- Оценка -->
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label" for="review-rate"><u><b>Оценка:</b></u> </label>
+            <div class="col-sm-10">
+                <input class="form-control" type="number" id="review-rate"
+                       required min="0" max="10" th:field="*{reviewRate}"/>
+            </div>
+        </div>
+
+        <!-- Коментарий -->
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label" for="comment"><u><b>Коментарий:</b></u> </label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="comment" required minlength="1" maxlength="300" th:field="*{comment}"/>
+            </div>
+        </div>
+
+        <!-- Это специалист, на которого пишется отзыв -->
+        <input th:field="*{specialist}" hidden/>
+
+        <!-- кнопка отправки формы -->
+        <div class="mb-3 row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-5">
+                <button class="btn btn-primary form-control">Добавить отзыв</button>
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+    </form>
 
     <h2>Наши отзывы:</h2>
-    <ol>
-        <li th:each="review: ${specialist.get().reviewSet}">
-            [[${review}]]
-        </li>
-    </ol>
 
-    <a th:href="@{'/review/new/' + ${specialist.get().id}}">Добавить новый отзыв</a>
+    <div th:each="review: ${reviews}" class="container-fluid" style="background: white; text-align: center; margin-right: 5px; padding: 3px;">
+        <h3 class="bg-white text-start text-dark">
+          <!--  <a th:href="@{'/review/delete/' + ${review.getId()}}">&times;</a> -->
+            [[${review.reviewRate}]] / 10
+        </h3>
+        <p class="bg-white text-start text-dark">[[${review.comment}]]</p>
+        <h6 class="bg-white text-start text-dark">[[${review.getWrittenInString()}]]
+            <a th:href="@{'/review/delete/' + ${review.getId()}}">Удалить отзыв</h3></a>
+        </h6>
 
-    <a th:href="@{/specialist}">Вернуться к списку специалистов</a>
+    </div>
 </div>
+<br>
 <!-- вставка фрагмента футера -->
 <th:block th:replace="layout/page-layout.html :: page-footer"/>
 </body>

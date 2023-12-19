@@ -26,6 +26,9 @@ public class Specialist {
     @OneToMany(mappedBy = "specialist")
     private Set<Review> reviewSet;
 
+    @OneToMany(mappedBy = "specialist")
+    private Set<ProcedureSpecialist> procedureSpecialistSet;
+
     // конструкторы
     public Specialist() {
         id = 0;
@@ -76,15 +79,21 @@ public class Specialist {
         this.reviewSet = reviewSet;
     }
 
-// ToString
+    public Set<ProcedureSpecialist> getProcedureSpecialistSet() {
+        return procedureSpecialistSet;
+    }
+
+    public void setProcedureSpecialistSet(Set<ProcedureSpecialist> procedureSpecialistSet) {
+        this.procedureSpecialistSet = procedureSpecialistSet;
+    }
+    // ToString
 
     @Override
     public String toString() {
-        return "Specialist{" +
+        return "Специалист: " +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", profile='" + profile + '\'' +
-                ", qualification='" + qualification + '\'' +
-                '}';
+                ", ФИО ='" + name + '\'' +
+                ", Профиль ='" + profile + '\'' +
+                ", Квалификация ='" + qualification + '\'';
     }
 }

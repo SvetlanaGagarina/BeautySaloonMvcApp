@@ -2,6 +2,8 @@ package org.top.beautysaloonmvcapp.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 // Procedure описывает сущность "Процедура" - запись таблицы услуг поштучно
 @Entity
 @Table(name = "procedure_t")
@@ -16,6 +18,13 @@ public class Procedure {
 
     @Column(name="price_f", nullable = false)
     private Integer price;    // стоимость услуги в одном экземпляре
+
+    @Lob
+    @Column(name="preview_image_f", columnDefinition = "MEDIUMBLOB")
+    private String previewImageData;// строка хранит байты изображения
+
+    @OneToMany(mappedBy = "procedure")
+    private Set<ProcedureSpecialist> procedureSpecialistSet;
 
     // конструкторы
     public Procedure() {
@@ -51,9 +60,23 @@ public class Procedure {
         this.price = price;
     }
 
+    public Set<ProcedureSpecialist> getProcedureSpecialistSet() {
+        return procedureSpecialistSet;
+    }
+
+    public void setProcedureSpecialistSet(Set<ProcedureSpecialist> procedureSpecialistSet) {
+        this.procedureSpecialistSet = procedureSpecialistSet;
+    }
+
+    public String getPreviewImageData() {
+        return previewImageData;
+    }
+
+    public void setPreviewImageData(String previewImageData) {
+        this.previewImageData = previewImageData;
+    }
+
     // ToString
-
-
     @Override
     public String toString() {
         return "Procedure{" +

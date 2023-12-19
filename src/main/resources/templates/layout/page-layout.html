@@ -1,15 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Page-Layout</title>
 </head>
 <body>
+<!-- фрагмент общего содержимого тега head -->
+<th:block th:fragment="page-head">
+    <meta charset="UTF-8">
+    <title>Beauty Saloon</title>
+    <!-- подключения локального bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <style>
+        body {
+            background-image: url("[[@{/images/images-2.jpg}]]");
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        html {
+            height: 100%;
+        }
+        .content {
+            flex: 1 0 auto;
+        }
+        .footer {
+            flex-shrink: 0;
+        }
+    </style>
+</th:block>
+
+<!-- компонент шапки приложения -->
+<header th:fragment="page-header">
+    <nav class="navbar navbar-expand-lg navbar-secondary bg-secondary text-light mb-1">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/}">Beauty Saloon</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" aria-current="page" th:classappend="${page == 'about-company'? 'active' : ''}" th:href="@{/about-company}">О компании</a>
+                    <a class="nav-link" th:href="@{/procedure}"  th:classappend="${page == 'procedure'? 'active' : ''}">Услуги</a>
+                    <a class="nav-link" th:href="@{/specialist}"  th:classappend="${page == 'specialist'? 'active' : ''}">Специалисты</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- фрагмент вывода сообщений dangerMessage/successMessage -->
+<th:block th:fragment="page-message">
+    <!-- вывод сообщения success message -->
+    <p class="alert alert-success" th:if="${successMessage != null}">
+        [[${successMessage}]]
+    </p>
+
+    <!-- вывод сообщения danger message -->
+    <p class="alert alert-danger" th:if="${dangerMessage != null}">
+        [[${dangerMessage}]]
+    </p>
+</th:block>
 
 
-<!-- футер приложения -->
-<footer th:fragment="page-footer" class="container-fluid text-center fixed-bottom text-bg-dark">
+<div class="flex-shrink-0">
+<footer th:fragment="page-footer" class="footer text-center text-bg-secondary">
+    <div class="content container">
+    <h4>Контакты для записи на прием: тел. 8-800-960-34-23, 8-928-456-30-12</h4></div>
+    <br>
     <h6>Developed by Gagarina S.G. &copy;</h6>
 </footer>
+</div>
+
 </body>
 </html>

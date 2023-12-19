@@ -1,7 +1,9 @@
 package org.top.beautysaloonmvcapp.service;
 
+import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientPropertiesMapper;
 import org.springframework.stereotype.Service;
 import org.top.beautysaloonmvcapp.entity.Procedure;
+import org.top.beautysaloonmvcapp.entity.ProcedureSpecialist;
 
 import java.util.Optional;
 
@@ -23,4 +25,8 @@ public interface ProcedureService {
 
     // обновить услугу
     Optional<Procedure> update(Procedure procedure);
+
+    // группа методов для работы со специалистами для услуг
+    boolean addSpecialist(ProcedureSpecialist procedureSpecialist);
+    Optional<ProcedureSpecialist> save(ProcedureSpecialist procedureSpecialist);
 }

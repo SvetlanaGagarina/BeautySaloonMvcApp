@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="layout/page-layout.html :: page-head"></head>
+<body>
+<div class="content container-fluid text-center">
+    <h1>Добавление нового отзыва</h1>
+
+    <div class="container-sm align-content-center text-center">
+        <form method="post" th:action="@{/review/new}" th:object="${review}">
+
+            <!-- Оценка -->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" for="review-rate">Оценка: </label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="number" id="review-rate"
+                           required min="0" max="10" th:field="*{reviewRate}"/>
+                </div>
+            </div>
+
+            <!-- Коментарий -->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" for="comment">Коментарий: </label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="comment" required minlength="1" maxlength="300" th:field="*{comment}"/>
+                </div>
+            </div>
+
+            <!-- выбор специалиста, на которого пишется отзыв -->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" for="specialist">Специалист: </label>
+                <div class="col-sm-10">
+                    <select class="form-select" id="specialist" th:field="*{specialist}">
+                        <option th:each="specialist: ${specialists}" th:value="${specialist.id}">
+                            [[${specialist}]]
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- кнопка отправки формы -->
+            <div class="mb-3 row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5">
+                    <button class="btn btn-success form-control">Сохранить</button>
+                </div>
+                <div class="col-sm-5">
+                    <a class="btn btn-danger form-control">Отменить</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+<!-- вставка фрагмента футера -->
+<th:block th:replace="layout/page-layout.html :: page-footer"/>
+</body>
+</html>

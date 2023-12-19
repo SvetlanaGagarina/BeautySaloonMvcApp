@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.top.beautysaloonmvcapp.entity.Review;
 import org.top.beautysaloonmvcapp.entity.Specialist;
 import org.top.beautysaloonmvcapp.service.SpecialistService;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 // SpecialistController - контроллер для работы со специалистами
@@ -22,6 +25,8 @@ public class SpecialistController {
     public SpecialistController(SpecialistService specialistService) {
         this.specialistService = specialistService;
     }
+
+    // 1. получить всех
     // http://localhost:8080/specialist
     @GetMapping("")
     public String getAll(Model model) {
@@ -30,7 +35,7 @@ public class SpecialistController {
         return "specialist/specialist-list";
     }
 
-    // Обработчики добавление объекта
+    // 2. Обработчики добавление объекта
     // первый получает форму, второй обрабатывает
     // http://localhost:8080/specialist/new
     @GetMapping("new")
@@ -43,17 +48,15 @@ public class SpecialistController {
     @PostMapping("new")
     public String postAddForm(Specialist specialist, RedirectAttributes redirectAttributes) {
         Optional<Specialist> saved = specialistService.save(specialist);
-        if (saved.isPresent()) {
-            redirectAttributes.addFlashAttribute(
-                    "successMessage",
-                    "Специалист " + saved.get() + " успешно добавлен");
-        }
+        saved.ifPresent(value -> redirectAttributes.addFlashAttribute(// автозамена среды разработки
+                "successMessage",
+                "Специалист " + value + " успешно добавлен"));
         // перенаправление запроса
         return "redirect:/specialist";
     }
 
-    // Обработчик удаления объекта
-    // http://localhost:8080/hotel/delete/{id}
+    // 3. Обработчик удаления объекта
+    // http://localhost:8080/specialist/delete/{id}
     @GetMapping("/delete/{id}")
     public String deleteById(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         Optional<Specialist> deleted = specialistService.deleteById(id);
@@ -72,7 +75,7 @@ public class SpecialistController {
         return "redirect:/specialist";
     }
 
-    // Обработчики редактирования объекта
+    // 4. Обработчики редактирования объекта
     // Первый возвращает форму, второй обрабатывает
     @GetMapping("/update/{id}")
     public String getUpdateForm(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
@@ -106,12 +109,20 @@ public class SpecialistController {
         return "redirect:/specialist";
     }
 
-    // Вывод информации об одном специалисте (подробной)
+    // 5. Вывод информации об одном специалисте (подробной)
     @GetMapping("{id}")
     public String details(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
         Optional<Specialist> specialist = specialistService.findById(id);
         if (specialist.isPresent()) {
-            model.addAttribute("specialist", specialist);
+            Review review = new Review();
+            review.setSpecialist(specialist.get());
+            List<Review> reviews = specialist.get().getReviewSet()
+                    .stream()
+                    .sorted(Comparator.comparing(Review::getWrittenIn).reversed())
+                    .toList();
+            model.addAttribute("specialist", specialist.get());
+            model.addAttribute("review", review);
+            model.addAttribute("reviews", reviews);
             return "specialist/specialist-details";
         } else {
             redirectAttributes.addFlashAttribute(

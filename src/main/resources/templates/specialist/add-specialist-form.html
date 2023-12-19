@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Beauty Saloon</title>
-    <!-- подключения локального bootstrap -->
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-</head>
+<head th:insert="layout/page-layout.html :: page-head"></head>
 <body>
+<!-- вставка фрагмента шапки -->
+<th:block th:replace="layout/page-layout.html :: page-header(page='specialist')"/>
+
     <!-- верстка с использованием bootstrap -->
-    <div class="container-fluid text-center">
+    <div class="content container-fluid text-center">
     <h1>Добавление нового специалиста.</h1>
         <div class="container-sm align-content-center text-center">
             <form method="post" th:action="@{/specialist/new}" th:object="${specialist}">

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="layout/page-layout.html :: page-head"></head>
+<body>
+<!-- вставка фрагмента шапки -->
+<th:block th:replace="layout/page-layout.html :: page-header(page='procedure')"/>
+
+<div class="content container-fluid text-center">
+    <h1>Детальная информация об услуге:</h1>
+
+    <table class="table table-bordered">
+        <!-- тело таблицы -->
+        <tbody>
+        <tr>
+            <th>ID:</th>
+            <td>[[${procedure.id}]]</td>
+        </tr>
+        <tr>
+            <th>Наименование услуги:</th>
+            <td>[[${procedure.name}]]</td>
+        </tr>
+        <tr>
+            <th>Стоимость 1 процедуры(руб):</th>
+            <td>[[${procedure.price}]]</td>
+        </tr>
+        <tr>
+            <th>Специалисты:</th>
+            <td>
+                <span th:if="${procedure.procedureSpecialistSet.isEmpty()}">
+                        No specialist for this procedure
+                    </span>
+                <span th:each="procedureSpecialist: ${procedure.procedureSpecialistSet}">
+                    [[${procedureSpecialist.specialist.name}]];
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <th>Изображение:</th>
+            <td th:if="${procedure.previewImageData != null}">
+                <img th:src="@{'data:image/jpeg;base64,' + ${procedure.previewImageData}}" width="350" height="250">
+            </td>
+            <td th:if="${procedure.previewImageData == null}"> - </td>
+        </tr>
+        </tbody>
+    </table>
+
+<br>
+    <p>
+       <u><b><h2>Для некоторых видов услуг требуется консультация специалиста.</h2></b></u>
+    </p>
+</div>
+<!-- вставка фрагмента футера -->
+<th:block th:replace="layout/page-layout.html :: page-footer"/>
+</body>
+</html>

@@ -25,6 +25,8 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
+    // 1. добавить новый отзыв
+    // получить форму
     @GetMapping("new")
     public String getAddForm(Model model) {
         Review review = new Review();
@@ -34,21 +36,14 @@ public class ReviewController {
         return "review/add-review-form";
     }
 
-    @GetMapping("new/{id}")
-    public String getAddForm(@PathVariable Integer id, Model model) {
-        Review review = new Review();
-        Optional<Specialist> specialist = specialistService.findById(id);
-        model.addAttribute("review", review);
-        model.addAttribute("specialists", new Specialist[]{specialist.get()});
-        return "review/add-review-form";
-    }
-
+    // обработать форму для добавления отзыва
     @PostMapping("new")
     public String postAddForm(Review review) {
         reviewService.save(review);
         return "redirect:/specialist/" + review.getSpecialist().getId();
     }
 
+    // удалить отзыв
     @GetMapping("delete/{id}")
     public String deleteById(@PathVariable Integer id) {
         Optional<Review> deleted = reviewService.deleteById(id);
