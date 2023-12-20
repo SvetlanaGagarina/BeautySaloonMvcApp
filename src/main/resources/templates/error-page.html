@@ -5,10 +5,16 @@
 <!-- вставка фрагмента шапки -->
 <th:block th:replace="layout/page-layout.html :: page-header(page='index')"/>
 
-<div class="content">
-    <h1>Так вот, у вас ошибка :c</h1>
-</div>
+<div class="content container-fluid text-center">
+    <h1>Так вот, у вас ошибка :</h1>
 
+    <div>
+        <p><h4>Status: [[${status}]]</h4></p>
+        <p><h4>Status: [[${message}]]</h4></p>
+    </div>
+</div>
+<!-- обращение к статичному изображению -->
+        <img th:src="@{/images/images-3.jpg}"/>
 <!-- вставка фрагмента футера -->
 <th:block th:replace="layout/page-layout.html :: page-footer"/>
 </body>
