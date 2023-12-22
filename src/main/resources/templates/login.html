@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="layout/page-layout.html :: page-head"></head>
+<body>
+<!-- вставка фрагмента шапки -->
+<th:block th:replace="layout/page-layout.html :: page-header(page='index')"/>
+
+<div class="content container-fluid text-center">
+
+    <form class="form-signin" method="post" th:action="@{/login}">
+        <h2 class="form-signin-heading">Пожалуйста, войдите:</h2>
+        <p>
+            <label for="username" class="sr-only">Логин</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Логин" required
+                   autofocus>
+        </p>
+        <p>
+            <label for="password" class="sr-only">Пароль</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Пароль" required>
+        </p>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+    </form>
+    <p>Еще не зарегистрировались? <a th:href="@{/user/register}">Зарегистрируйтесь!</a></p>
+</div>
+<!-- вставка фрагмента футера -->
+<th:block th:replace="layout/page-layout.html :: page-footer"/>
+
+</body>
+</html>

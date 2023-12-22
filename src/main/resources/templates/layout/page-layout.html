@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Page-Layout</title>
@@ -48,6 +48,17 @@
                     <a class="nav-link" th:href="@{/specialist}"  th:classappend="${page == 'specialist'? 'active' : ''}">Специалисты</a>
                 </div>
             </div>
+            <!-- кнопки аутентификации и авторизации и вывод информации о сессии пользователя -->
+            <span sec:authorize="isAuthenticated()">[[${#authentication.getPrincipal().getUsername()}]]</span>
+            <form sec:authorize="isAuthenticated()" class="d-flex" method="post" th:action="@{/logout}">
+                <button class="btn btn-outline-danger">Выйти</button>
+            </form>
+            <form sec:authorize="!isAuthenticated()" class="d-flex" method="get" th:action="@{/login}">
+                <button class="btn btn-outline-white">Войти</button>
+            </form>
+            <form sec:authorize="!isAuthenticated()" class="d-flex" method="get" th:action="@{/user/register}">
+                <button class="btn btn-outline-white">Зарегистрироваться</button>
+            </form>
         </div>
     </nav>
 </header>

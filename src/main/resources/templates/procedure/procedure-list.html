@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:insert="layout/page-layout.html :: page-head"></head>
 <body>
 <!-- вставка фрагмента шапки -->
@@ -32,15 +32,15 @@
 
             <!-- ячейка действия -->
             <td>
-                <a th:href="@{'/procedure/delete/' + ${procedure.id}}" class="btn btn-danger">Удалить</a>
-                <a th:href="@{'/procedure/update/' + ${procedure.id}}" class="btn btn-primary">Редактировать</a>
+                <a sec:authorize="hasRole('ADMIN')" th:href="@{'/procedure/delete/' + ${procedure.id}}" class="btn btn-danger">Удалить</a>
+                <a sec:authorize="hasRole('ADMIN')" th:href="@{'/procedure/update/' + ${procedure.id}}" class="btn btn-primary">Редактировать</a>
                 <a th:href="@{'/procedure/' + ${procedure.id}}" class="btn btn-success">Просмотр</a>
             </td>
         </tr>
         </tbody>
     </table>
 
-    <a class="btn btn-success form-control" th:href="@{/procedure/new}">Добавить новую услугу</a>
+    <a sec:authorize="hasRole('ADMIN')" class="btn btn-success form-control" th:href="@{/procedure/new}">Добавить новую услугу</a>
 
 </div>
 <br>
